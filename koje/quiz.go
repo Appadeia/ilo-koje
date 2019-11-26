@@ -43,7 +43,7 @@ func quiz(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	if i, err := strconv.Atoi(lex[1]); err != nil && i <= 15 {
+	if i, err := strconv.Atoi(lex[1]); err != nil || i <= 15 || i > 0 {
 		embed := NewEmbed().
 			SetTitle("Invalid count!").
 			SetColor(0xff0000)
