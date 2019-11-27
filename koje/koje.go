@@ -89,10 +89,11 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			"etybrowse": browseety,
 			"about":     about,
 			"admin":     admin,
+			"count":     count,
 		}
 		lex := strings.Split(strings.Split(m.Content, "!")[1], " ")
 		if val, ok := cmds[lex[0]]; ok {
-			val(s, m)
+			go val(s, m)
 			logCommand(m)
 		}
 	}

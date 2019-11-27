@@ -76,6 +76,12 @@ func help(s *discordgo.Session, m *discordgo.MessageCreate) {
 		),
 	)
 	page.Add(
+		cmdEmbedWithArgs(
+			"count", "Count in Toki Pona.",
+			[]arg{arg{argName: "num", argDesc: "The number to count."}},
+		),
+	)
+	page.Add(
 		cmdEmbed("about", "About me, ilo Koje."),
 	)
 	page.SetPageFooters()
