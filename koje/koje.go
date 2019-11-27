@@ -1,11 +1,14 @@
 package koje
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 	"gopkg.in/ini.v1"
@@ -28,6 +31,49 @@ type puWord struct {
 
 type cmd func(*discordgo.Session, *discordgo.MessageCreate)
 
+type CommandStats struct {
+	Cmds               []string
+	CmdsRanAmountToday int
+	LastTimeCmdRan     time.Time
+}
+
+var cStats CommandStats
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func saveCommands() {
+	data, _ := json.Marshal(cStats)
+	err := ioutil.WriteFile("./storage/commandsNow.json", data, 0644)
+	check(err)
+}
+
+func loadCommands() {
+	data, _ := ioutil.ReadFile("./storage/commandsNow.json")
+	err := json.Unmarshal(data, &cStats)
+	check(err)
+}
+
+func logCommand(m *discordgo.MessageCreate) {
+	now := time.Now()
+	if now.Month() != cStats.LastTimeCmdRan.Month() || now.Day() != cStats.LastTimeCmdRan.Day() {
+		data, _ := ioutil.ReadFile("./storage/commandsNow.json")
+		path := fmt.Sprintf("./storage/%d-%d-%d.json", cStats.LastTimeCmdRan.Year(), cStats.LastTimeCmdRan.Month(), cStats.LastTimeCmdRan.Day())
+		err := ioutil.WriteFile(path, data, 0644)
+		check(err)
+		cStats.LastTimeCmdRan = now
+		cStats.Cmds = []string{m.Content}
+		cStats.CmdsRanAmountToday = 1
+	} else {
+		cStats.LastTimeCmdRan = now
+		cStats.Cmds = append(cStats.Cmds, m.Content)
+		cStats.CmdsRanAmountToday++
+	}
+}
+
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
 		return
@@ -42,17 +88,24 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			"sitelen":   sitelenPona,
 			"etybrowse": browseety,
 			"about":     about,
+			"admin":     admin,
 		}
 		lex := strings.Split(strings.Split(m.Content, "!")[1], " ")
 		if val, ok := cmds[lex[0]]; ok {
 			val(s, m)
+			logCommand(m)
 		}
 	}
 }
 
+var cfg *ini.File
+
 // Main function of ilo Koje
 func Main() {
-	cfg, err := ini.Load("config.ini")
+	defer saveCommands()
+	loadCommands()
+	var err error
+	cfg, err = ini.Load("config.ini")
 	if err != nil {
 		fmt.Printf("Failed to load config.ini")
 		os.Exit(1)

@@ -29,6 +29,7 @@ func about(s *discordgo.Session, m *discordgo.MessageCreate) {
 	embed.SetTitle("About Me")
 	embed.AddField("Guilds", strconv.Itoa(guildCount))
 	embed.AddField("Users", strconv.Itoa(len(users)))
+	embed.AddField("Commands Ran Today", strconv.Itoa(cStats.CmdsRanAmountToday))
 	embed.SetColor(0xfefe62)
 	s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 }
