@@ -61,6 +61,9 @@ func help(s *discordgo.Session, m *discordgo.MessageCreate) {
 		),
 	)
 	page.Add(
+		cmdEmbed("etybrowse", "Browse through Toki Pona etymology."),
+	)
+	page.Add(
 		cmdEmbedWithArgs(
 			"quiz", "Get quizzed on Toki Pona words.",
 			[]arg{arg{argName: "count", argDesc: "The number of words. Maximum 15."}},
@@ -71,6 +74,9 @@ func help(s *discordgo.Session, m *discordgo.MessageCreate) {
 			"sitelen", "Draw some text in Sitelen Pona.",
 			[]arg{arg{argName: "text", argDesc: "The text to draw."}},
 		),
+	)
+	page.Add(
+		cmdEmbed("about", "About me, ilo Koje."),
 	)
 	page.SetPageFooters()
 	page.Spawn()

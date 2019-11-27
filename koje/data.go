@@ -44,6 +44,62 @@ func EtyDict() string {
 			"language": "Dutch (Nederlands)",
 			"word": "ander"
 		}
+	},
+	{
+		"word": "anu",
+		"origins": {
+			"language": "Georgian (ქართული)",
+			"word": "ან (an)"
+		}
+	},
+	{
+		"word": "awen",
+		"origins": {
+			"language": "Dutch (Nederlands)",
+			"word": "houden"
+		}
+	},
+	{
+		"word": "e",
+		"origins": {
+			"language": "A priori.",
+			"word": null
+		}
+	},
+	{
+		"word": "en",
+		"origins": {
+			"language": "Dutch (Nederlands)",
+			"word": "en"
+		}
+	},
+	{
+		"word": "ijo",
+		"origins": {
+			"language": "Esperanto",
+			"word" : "io"
+		}
+	},
+	{
+		"word": "ike",
+		"origins": {
+			"language": "Finnish (suomen kieli)",
+			"word": "ilkeä"
+		}
+	},
+	{
+		"word": "ilo",
+		"origins": {
+			"language": "Esperanto",
+			"word": "ilo"
+		}
+	},
+	{
+		"word": "insa",
+		"origins": {
+			"language": "Tok Pisin",
+			"word": "insait"
+		}
 	}
 ]
 	`
@@ -383,7 +439,7 @@ func PuDict() string {
 		  ]
 		},
 		{
-		  "word":"compound verb (kama)",
+		  "word":"kama",
 		  "meanings":[
 			[
 			  "noun",
@@ -858,10 +914,6 @@ func PuDict() string {
 		  "meanings":[
 			[
 			  "noun (unofficial)",
-			  "back, rear end, butt, behind"
-			],
-			[
-			  "modifier (unofficial)",
 			  "monster, monstrosity, fearful thing, fright, mythical creatures, fear"
 			]
 		  ]
@@ -1394,7 +1446,7 @@ func PuDict() string {
 		  "meanings":[
 			[
 			  "noun",
-			  "front, chest, torso, wall"
+			  "front, face, chest, torso, wall"
 			]
 		  ]
 		},

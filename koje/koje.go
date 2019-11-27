@@ -40,6 +40,8 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			"etymology": ety,
 			"quiz":      quiz,
 			"sitelen":   sitelenPona,
+			"etybrowse": browseety,
+			"about":     about,
 		}
 		lex := strings.Split(strings.Split(m.Content, "!")[1], " ")
 		if val, ok := cmds[lex[0]]; ok {
