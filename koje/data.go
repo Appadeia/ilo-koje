@@ -100,6 +100,55 @@ func EtyDict() string {
 			"language": "Tok Pisin",
 			"word": "insait"
 		}
+	},
+	{
+		"word": "jaki",
+		"origins": {
+			"language": "English",
+			"word": "yucky"
+		}
+	},
+	{
+		"word": "jan",
+		"origins": {
+			"language": "Cantonese",
+			"word": "人 /jɐn"
+		}
+	},
+	{
+		"word": "jelo",
+		"origins": {
+			"language": "English",
+			"word": "yellow"
+		}
+	},
+	{
+		"word": "jo",
+		"origins": {
+			"language": "Mandarin",
+			"word": "有 yǒu"
+		}
+	},
+	{
+		"word": "kala",
+		"origins": {
+			"language": "Finnish (suomen kieli)",
+			"word": "kala"
+		}
+	},
+	{
+		"word": "kalama",
+		"origins": {
+			"language": "Croatian (hrvatski)",
+			"word": "kalama"
+		}
+	},
+	{
+		"word": "kama",
+		"origins": {
+			"language": "Tok Pisin",
+			"word": "kamap"
+		}
 	}
 ]
 	`
