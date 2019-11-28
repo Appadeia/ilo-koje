@@ -83,17 +83,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
-	if chanBlacklisted(m.ChannelID) && m.Author.ID != cfg.Section("Bot").Key("operator").String() {
-		embed := NewEmbed().
-			SetTitle("This channel is blacklisted for running commands.").
-			SetColor(0xff0000)
-		msg, _ := s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
-		go func(msg *discordgo.Message) {
-			time.Sleep(10 * time.Second)
-			s.ChannelMessageDelete(msg.ChannelID, msg.ID)
-		}(msg)
-		return
-	}
 	if strings.HasPrefix(m.Content, "k!") {
 		cmds := map[string]cmd{
 			"define":    pu,
@@ -109,6 +98,17 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 		lex := strings.Split(strings.Split(m.Content, "!")[1], " ")
 		if val, ok := cmds[lex[0]]; ok {
+			if chanBlacklisted(m.ChannelID) && m.Author.ID != cfg.Section("Bot").Key("operator").String() {
+				embed := NewEmbed().
+					SetTitle("This channel is blacklisted for running commands.").
+					SetColor(0xff0000)
+				msg, _ := s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
+				go func(msg *discordgo.Message) {
+					time.Sleep(10 * time.Second)
+					s.ChannelMessageDelete(msg.ChannelID, msg.ID)
+				}(msg)
+				return
+			}
 			go val(s, m)
 			logCommand(m)
 		}

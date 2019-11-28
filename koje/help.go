@@ -66,7 +66,7 @@ func help(s *discordgo.Session, m *discordgo.MessageCreate) {
 	page.Add(
 		cmdEmbedWithArgs(
 			"quiz", _t("Get quizzed on Toki Pona words.", "mi toki e ni tawa sina: 'nimi li seme?'", m),
-			[]arg{arg{argName: "count", argDesc: _t("The number of words. Maximum 15.", "nanpa pi nimi. mi wile nanpa ≤ 15", m)}},
+			[]arg{arg{argName: "count", argDesc: _t("The number of words. Maximum 15.", "nanpa nimi. mi wile nanpa ≤ 15", m)}},
 		),
 	)
 	page.Add(
@@ -78,11 +78,11 @@ func help(s *discordgo.Session, m *discordgo.MessageCreate) {
 	page.Add(
 		cmdEmbedWithArgs(
 			"count", _t("Count in Toki Pona.", "toki e nanpa kepeken toki pona.", m),
-			[]arg{arg{argName: "num", argDesc: _t("The number to count.", "nanpa pi toki.", m)}},
+			[]arg{arg{argName: "num", argDesc: _t("The number to count.", "nanpa toki.", m)}},
 		),
 	)
 	page.Add(
-		cmdEmbed("about", _t("About me, ilo Koje.", "sona pi mi.", m)),
+		cmdEmbed("about", _t("About me, ilo Koje.", "sona mi.", m)),
 	)
 	page.SetPageFooters()
 	page.Spawn()
