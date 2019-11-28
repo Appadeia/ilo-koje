@@ -18,6 +18,20 @@ func admin(s *discordgo.Session, m *discordgo.MessageCreate) {
 				SetColor(0xff0000)
 			s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 			panic(errors.New("induced panic"))
+		case "blacklist":
+			if chanBlacklisted(m.ChannelID) {
+				embed := NewEmbed().
+					SetTitle("Channel no longer blacklisted for running commands").
+					SetColor(0xff0000)
+				s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
+				setChanBlacklisted(m.ChannelID, false)
+			} else {
+				embed := NewEmbed().
+					SetTitle("Channel blacklisted for running commands").
+					SetColor(0xff0000)
+				s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
+				setChanBlacklisted(m.ChannelID, true)
+			}
 		}
 	} else {
 		embed := NewEmbed().

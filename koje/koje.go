@@ -4,15 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 	"time"
 
+	"github.com/dgraph-io/badger"
+
 	"github.com/bwmarrin/discordgo"
 	"gopkg.in/ini.v1"
 )
+
+var db *badger.DB
 
 type wordOrigin struct {
 	Language   string `json:"language"`
@@ -78,6 +83,17 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
+	if chanBlacklisted(m.ChannelID) && m.Author.ID != cfg.Section("Bot").Key("operator").String() {
+		embed := NewEmbed().
+			SetTitle("This channel is blacklisted for running commands.").
+			SetColor(0xff0000)
+		msg, _ := s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
+		go func(msg *discordgo.Message) {
+			time.Sleep(10 * time.Second)
+			s.ChannelMessageDelete(msg.ChannelID, msg.ID)
+		}(msg)
+		return
+	}
 	if strings.HasPrefix(m.Content, "k!") {
 		cmds := map[string]cmd{
 			"define":    pu,
@@ -104,6 +120,7 @@ var cfg *ini.File
 // Main function of ilo Koje
 func Main() {
 	defer saveCommands()
+
 	loadCommands()
 	var err error
 	cfg, err = ini.Load("config.ini")
@@ -111,6 +128,11 @@ func Main() {
 		fmt.Printf("Failed to load config.ini")
 		os.Exit(1)
 	}
+	db, err = badger.Open(badger.DefaultOptions("./storage/db"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
 	discord, err := discordgo.New("Bot " + cfg.Section("Bot").Key("token").String())
 	if err != nil {
