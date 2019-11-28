@@ -24,8 +24,8 @@ func sitelenPona(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if len(lex) < 2 {
 		embed := NewEmbed().
-			SetTitle("Error!").
-			SetDescription("No words given to render!").
+			SetTitle(_t("Error!", "pakala!", m)).
+			SetDescription(_t("No words given to render!", "sina pana e nimi tawa mi ala!", m)).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return

@@ -16,15 +16,15 @@ func ety(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if len(lex) < 2 {
 		embed := NewEmbed().
-			SetTitle("Error!").
-			SetDescription("No word given to look up in pu.").
+			SetTitle(_t("Error!", "pakala!", m)).
+			SetDescription("sina pana e mi nimi ala.").
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return
 	}
 	if err != nil {
 		embed := NewEmbed().
-			SetTitle("Error!").
+			SetTitle(_t("Error!", "pakala!", m)).
 			SetDescription(err.Error()).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
@@ -42,8 +42,8 @@ func ety(s *discordgo.Session, m *discordgo.MessageCreate) {
 	var blank puEty
 	if returnEty == blank {
 		embed := NewEmbed().
-			SetTitle("Error!").
-			SetDescription("Word not found.").
+			SetTitle(_t("Error!", "pakala!", m)).
+			SetDescription("nimi li lon ala.").
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return

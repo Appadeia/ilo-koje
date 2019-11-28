@@ -19,15 +19,15 @@ func count(s *discordgo.Session, m *discordgo.MessageCreate) {
 	lex := strings.Split(strings.Split(m.Content, "!")[1], " ")
 	if len(lex) < 2 {
 		embed := NewEmbed().
-			SetTitle("No number to count given!").
+			SetTitle(_t("No number to count given!", "sina pana e mi nanpa ala!", m)).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return
 	}
 	if i, err := strconv.Atoi(lex[1]); err != nil || i < 0 {
 		embed := NewEmbed().
-			SetTitle("Invalid number!").
-			SetDescription("Numbers must be non-negative integers").
+			SetTitle(_t("Invalid number!", "nanpa ike!", m)).
+			SetDescription(_t("Numbers must be non-negative integers", "mi wile e nanpa pona.", m)).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return
@@ -82,7 +82,7 @@ func count(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	} else {
 		embed := NewEmbed().
-			SetTitle("Your number is too big to send in chat.").
+			SetTitle(_t("Your number is too big to send in chat.", "nanpa sina li suli mute. suli mute li ike tawa Discord.", m)).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return

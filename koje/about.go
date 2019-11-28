@@ -26,10 +26,10 @@ func about(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 	}
 	embed := NewEmbed()
-	embed.SetTitle("About Me")
-	embed.AddField("Guilds", strconv.Itoa(guildCount))
-	embed.AddField("Users", strconv.Itoa(len(users)))
-	embed.AddField("Commands Ran Today", strconv.Itoa(cStats.CmdsRanAmountToday))
+	embed.SetTitle(_t("About Me", "sona mi", m))
+	embed.AddField(_t("Guilds", "nanpa pi kulupu", m), strconv.Itoa(guildCount))
+	embed.AddField(_t("Users", "nanpa pi jan kulupu", m), strconv.Itoa(len(users)))
+	embed.AddField(_t("Commands Ran Today", "nanpa pi toki lawa pi tenpo suno ni", m), strconv.Itoa(cStats.CmdsRanAmountToday))
 	embed.SetColor(0xfefe62)
 	s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 }

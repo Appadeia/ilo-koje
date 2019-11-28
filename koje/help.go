@@ -36,53 +36,53 @@ func cmdEmbed(cmd string, desc string) *discordgo.MessageEmbed {
 func help(s *discordgo.Session, m *discordgo.MessageCreate) {
 	embed := NewEmbed()
 	embed.SetTitle("toki! mi ilo Koje!")
-	embed.SetDescription("Here are my commands:")
+	embed.SetDescription(_t("Here are my commands:", "toki lawa mi li ni:", m))
 	embed.SetColor(0x000099)
 
 	s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 
 	page := dgwidgets.NewPaginator(s, m.ChannelID)
 	page.Add(
-		cmdEmbed("help", "This command."),
+		cmdEmbed("help", _t("This command.", "ni.", m)),
 	)
 	page.Add(
 		cmdEmbedWithArgs(
-			"define", "Define a toki pona word.",
-			[]arg{arg{argName: "word", argDesc: "The word to define"}},
+			"define", _t("Define a toki pona word.", "kama sona e nimi pi toki pona", m),
+			[]arg{arg{argName: "word", argDesc: _t("The word to define", "nimi seme li wile kama sona", m)}},
 		),
 	)
 	page.Add(
-		cmdEmbed("browse", "Browse through Toki Pona words."),
+		cmdEmbed("browse", _t("Browse through Toki Pona words.", "kama sona e nimi mute pi toki pona", m)),
 	)
 	page.Add(
 		cmdEmbedWithArgs(
-			"etymology", "Get the etymology for a Toki Pona word.",
-			[]arg{arg{argName: "word", argDesc: "The word to get etymology for"}},
+			"etymology", _t("Get the etymology for a Toki Pona word.", "kama sona e tan nimi pi toki pona", m),
+			[]arg{arg{argName: "word", argDesc: _t("The word to get etymology for", "nimi tan seme li wile kama sona", m)}},
 		),
 	)
 	page.Add(
-		cmdEmbed("etybrowse", "Browse through Toki Pona etymology."),
+		cmdEmbed("etybrowse", _t("Browse through Toki Pona etymology.", "kama sona e nimi tan mute pi toki pona", m)),
 	)
 	page.Add(
 		cmdEmbedWithArgs(
-			"quiz", "Get quizzed on Toki Pona words.",
-			[]arg{arg{argName: "count", argDesc: "The number of words. Maximum 15."}},
-		),
-	)
-	page.Add(
-		cmdEmbedWithArgs(
-			"sitelen", "Draw some text in Sitelen Pona.",
-			[]arg{arg{argName: "text", argDesc: "The text to draw."}},
+			"quiz", _t("Get quizzed on Toki Pona words.", "mi toki e ni tawa sina: 'nimi li seme?'", m),
+			[]arg{arg{argName: "count", argDesc: _t("The number of words. Maximum 15.", "nanpa pi nimi. mi wile nanpa ≤ 15", m)}},
 		),
 	)
 	page.Add(
 		cmdEmbedWithArgs(
-			"count", "Count in Toki Pona.",
-			[]arg{arg{argName: "num", argDesc: "The number to count."}},
+			"sitelen", _t("Draw some text in Sitelen Pona.", "sitelen e nimi kepeken sitelen pona", m),
+			[]arg{arg{argName: "text", argDesc: _t("The text to draw.", "nimi tawa sitelen", m)}},
 		),
 	)
 	page.Add(
-		cmdEmbed("about", "About me, ilo Koje."),
+		cmdEmbedWithArgs(
+			"count", _t("Count in Toki Pona.", "toki e nanpa kepeken toki pona.", m),
+			[]arg{arg{argName: "num", argDesc: _t("The number to count.", "nanpa pi toki.", m)}},
+		),
+	)
+	page.Add(
+		cmdEmbed("about", _t("About me, ilo Koje.", "sona pi mi.", m)),
 	)
 	page.SetPageFooters()
 	page.Spawn()

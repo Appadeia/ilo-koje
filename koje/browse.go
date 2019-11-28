@@ -15,7 +15,7 @@ func browse(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if err != nil {
 		embed := NewEmbed().
-			SetTitle("Error!").
+			SetTitle(_t("Error!", "pakala!", m)).
 			SetDescription(err.Error()).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)

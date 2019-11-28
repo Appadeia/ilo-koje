@@ -17,8 +17,8 @@ func pu(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if len(lex) < 2 {
 		embed := NewEmbed().
-			SetTitle("Error!").
-			SetDescription("No word given to look up in pu.").
+			SetTitle(_t("Error!", "pakala!", m)).
+			SetDescription(_t("No word given to look up in pu.", "sina pana e mi nimi ala.", m)).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return
@@ -26,7 +26,7 @@ func pu(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if err != nil {
 		embed := NewEmbed().
-			SetTitle("Error!").
+			SetTitle(_t("Error!", "pakala!", m)).
 			SetDescription(err.Error()).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
@@ -43,8 +43,8 @@ func pu(s *discordgo.Session, m *discordgo.MessageCreate) {
 	blank := puWord{}
 	if cmp.Equal(returnWord, blank) {
 		embed := NewEmbed().
-			SetTitle("Error!").
-			SetDescription("Word not found.").
+			SetTitle(_t("Error!", "pakala!", m)).
+			SetDescription("nimi li lon ala.").
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return

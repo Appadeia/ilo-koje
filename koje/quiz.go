@@ -27,8 +27,8 @@ func quiz(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if len(lex) < 2 {
 		embed := NewEmbed().
-			SetTitle("Error!").
-			SetDescription("No question count given.").
+			SetTitle(_t("Error!", "pakala!", m)).
+			SetDescription(_t("No question count given.", "sina pana e nanpa tawa mi ala", m)).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return
@@ -36,7 +36,7 @@ func quiz(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if err != nil {
 		embed := NewEmbed().
-			SetTitle("Error reading pu!").
+			SetTitle(_t("Error!", "pakala!", m)).
 			SetDescription(err.Error()).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
@@ -45,7 +45,7 @@ func quiz(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if i, err := strconv.Atoi(lex[1]); err != nil || i >= 15 || i <= 0 {
 		embed := NewEmbed().
-			SetTitle("Invalid count!").
+			SetTitle(_t("Invalid count!", "nanpa ike a!", m)).
 			SetColor(0xff0000)
 		s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		return
@@ -62,8 +62,8 @@ Wait:
 		word := words[rand.Intn(len(words))]
 		embed := NewEmbed()
 		embed.SetTitle(word.Word)
-		embed.SetDescription("What does this word mean?")
-		embed.SetFooter("Question " + strconv.Itoa(i) + " out of " + strconv.Itoa(reps))
+		embed.SetDescription(_t("What does this word mean?", "nimi ni li seme?", m))
+		embed.SetFooter(_t("Question "+strconv.Itoa(i)+" out of "+strconv.Itoa(reps), "nimi "+strconv.Itoa(i)+"/"+strconv.Itoa(reps), m))
 
 		mesg, _ := s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 		quizMessages = append(quizMessages, mesg.ID)
@@ -99,7 +99,7 @@ Wait:
 				}
 				if strings.Contains(usermsg.Content, "cancel") {
 					embed := NewEmbed()
-					embed.SetTitle("Quiz Cancelled!")
+					embed.SetTitle(_t("Quiz Cancelled!", "tenpo ni la ni li lon ala", m))
 					s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 					s.ChannelMessagesBulkDelete(m.ChannelID, quizMessages)
 					return
@@ -108,7 +108,7 @@ Wait:
 					for _, val := range arr2 {
 						if strings.ToLower(strings.TrimSpace(item)) == val {
 							embed := NewEmbed()
-							embed.SetTitle("Correct!")
+							embed.SetTitle(_t("Correct!", "pona a!", m))
 							embed.SetColor(0x00ff00)
 							correct = correct + 1
 							m, _ := s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
@@ -121,7 +121,7 @@ Wait:
 				}
 			case <-timeoutChan:
 				embed := NewEmbed()
-				embed.SetTitle("Time's up, here's what it means!")
+				embed.SetTitle(_t("Time's up, here's what it means!", "tenpo ala a! ni li nimi:", m))
 				for _, meaning := range word.Meanings {
 					embed.AddField(meaning[0], meaning[1])
 				}
@@ -135,11 +135,11 @@ Wait:
 		}
 	}
 	embed := NewEmbed()
-	embed.SetTitle("Quiz Results (" + strconv.Itoa(reps) + " Questions)")
+	embed.SetTitle(_t("Quiz Results ("+strconv.Itoa(reps)+" Questions)", "toki "+strconv.Itoa(reps), m))
 	embed.SetColor(0x0000ff)
-	embed.AddField("Correct Answers", strconv.Itoa(correct))
-	embed.AddField("Missed Answers", strconv.Itoa(reps-correct))
-	embed.SetFooter(m.Author.Username+"'s Quiz", m.Author.AvatarURL(""))
+	embed.AddField(_t("Correct Answers", "toki pona", m), strconv.Itoa(correct))
+	embed.AddField(_t("Correct Answers", "toki ike", m), strconv.Itoa(reps-correct))
+	embed.SetFooter(_t(m.Author.Username+"'s Quiz", "ni li ijo pi "+m.Author.Username, m), m.Author.AvatarURL(""))
 	s.ChannelMessageSendEmbed(m.ChannelID, embed.MessageEmbed)
 	s.ChannelMessagesBulkDelete(m.ChannelID, quizMessages)
 }

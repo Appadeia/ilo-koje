@@ -1,6 +1,17 @@
 package koje
 
-import "github.com/dgraph-io/badger"
+import (
+	"github.com/bwmarrin/discordgo"
+	"github.com/dgraph-io/badger"
+)
+
+func _t(en string, tp string, m *discordgo.MessageCreate) string {
+	if chanTped(m.ChannelID) {
+		return tp
+	} else {
+		return en
+	}
+}
 
 func chanTped(id string) bool {
 	var ret bool
