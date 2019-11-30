@@ -86,11 +86,13 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if strings.HasPrefix(m.Content, "k!") {
 		cmds := map[string]cmd{
 			"define":    pu,
+			"d":         pu,
 			"help":      help,
 			"browse":    browse,
 			"etymology": ety,
 			"quiz":      quiz,
 			"sitelen":   sitelenPona,
+			"s":         sitelenPona,
 			"etybrowse": browseety,
 			"about":     about,
 			"admin":     admin,
