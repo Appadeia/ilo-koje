@@ -57,9 +57,11 @@ func saveCommands() {
 }
 
 func loadCommands() {
-	data, _ := ioutil.ReadFile("./storage/commandsNow.json")
-	err := json.Unmarshal(data, &cStats)
-	check(err)
+	data, err := ioutil.ReadFile("./storage/commandsNow.json")
+	if err != nil {
+		ioutil.WriteFile("./storage/commandsNow.json", []byte("{}"), 0644)
+	}
+	json.Unmarshal(data, &cStats)
 }
 
 func logCommand(m *discordgo.MessageCreate) {
