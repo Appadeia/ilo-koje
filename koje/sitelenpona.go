@@ -37,7 +37,7 @@ func sitelenPona(s *discordgo.Session, m *discordgo.MessageCreate) {
 		text = strings.TrimSpace(text)
 	}
 	filename := "/tmp/" + randSeq(10) + ".png"
-	cmd := exec.Command("pango-view", "-t", text, "--font", "linja pona 50", "-o", filename, "-q", "--align=center", "--hinting=slight", "--antialias=gray", "--margin=10px")
+	cmd := exec.Command("pango-view", "-t", text, "--font", "linja pimeja 50", "-o", filename, "-q", "--align=center", "--hinting=slight", "--antialias=gray", "--margin=10px")
 	if err := cmd.Run(); err != nil {
 		embed := NewEmbed().
 			SetTitle("Internal Error").
