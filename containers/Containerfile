@@ -1,8 +1,28 @@
-FROM golang:stretch
+FROM golang:stretch as builder
 
 WORKDIR $GOPATH/src
 
 RUN CGO_ENABLED=0 go get -v \
-	github.com/appadeia/ilo-koje
+    github.com/Appadeia/ilo-koje
 
-ENTRYPOINT ["/go/bin/ilo-koje"]
+FROM fedora:latest
+
+WORKDIR /koje
+
+COPY --from=builder /go/bin/ilo-koje .
+
+RUN dnf -y install pango unzip
+
+ADD https://github.com/increpare/linja_pimeja/releases/download/1.4/linjapimeja1.4.zip .
+
+RUN unzip linjapimeja1.4.zip
+
+RUN mkdir -p /usr/share/fonts/truetype
+
+RUN mkdir -p /usr/share/fonts/opentype
+
+RUN cp ./linjapimeja1.4.ttf /usr/share/fonts/truetype/
+
+RUN cp ./linjapimeja1.4.otf /usr/share/fonts/opentype/
+
+ENTRYPOINT ["/koje/ilo-koje"]
