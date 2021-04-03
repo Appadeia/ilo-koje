@@ -1,7 +1,7 @@
 package main
 
-import "github.com/appadeia/ilo-koje/koje"
+import "ilo-koje/ilo"
 
 func main() {
-	koje.Main()
+	ilo.Main()
 }
